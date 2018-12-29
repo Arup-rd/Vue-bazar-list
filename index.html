@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+       body {
+           text-align: center;
+           margin-top: 100px;
+       } 
+       ul {
+           margin: 20px 400px 0 400px;
+       } 
+       button {
+              margin-right: 50px; 
+       }
+    </style>
+</head>
+<body>
+    <div id="app" >
+
+        <h1>Bazar List</h1>
+        <form @submit.prevent="additem">
+           <input type="text" v-model="newItem">
+        </form>
+        
+         <ul class="list-group">
+            <li v-for="(item, index) in items" :key="index" class="list-group-item">
+                 <button class="btn btn-sm btn-danger" @click="removeItem(index)">remove</button>
+                  <b>{{item.name}} - <input v-model="item.price"></b>
+             </li>
+             <li class="list-group-item"><b>Total - {{total}}</b></li>
+         </ul>
+    </div>
+    <script>
+            new Vue ({
+                el:'#app',
+                data: {
+                    items:[
+                            {name:'Rice' , price: 12.50},
+                            {name:'Weat' , price: 10.25},
+                            {name:'Egg' , price: 5.00},      
+                    ],
+                    newItem:''
+                },
+                computed: {
+                        total(){
+                            var total = 0
+                            this.items.forEach(element => {
+                                total +=  parseFloat(element.price)
+                            });
+                            return total 
+                        }
+
+                },
+                methods : {
+                         additem(){
+                             this.items.push({
+                                 name: this.newItem,
+                             })
+                         },
+                         removeItem(index){
+                         this.items.splice(index, 1)
+                    }
+                    }
+            })
+        </script>
+</body>
+</html>
